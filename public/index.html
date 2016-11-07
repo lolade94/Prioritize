@@ -1,0 +1,345 @@
+<!Doctype html>
+<!--Get Yo Life - a prioritize application implemented through the MEAN STACK-->
+<html ng-app="priority">
+<head>
+  <title> Prioritize </title>
+  <meta charset="utf-8" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="css/style.css" rel="stylesheet"/>
+</head>
+<body ng-controller="mainController">
+
+  <div id="main" class="container">
+    <!-- application title-->
+    <div class="app-title">
+      <h1 class="title">Prioritize</h1>
+
+      <!--Tabs for specific content of app-->
+      <ul class="tabs">
+        <li ng-class="{active: isSet(1)} ">
+          <a href  ng-click="setTab(1)"> Priotized Tasks </a>
+        </li>
+         <li ng-class="{active: isSet(2)} ">
+           <a href  ng-click="setTab(2)"> Timeline </a>
+         </li>
+         <li ng-class="{active: isSet(3)} ">
+           <a href  ng-click="setTab(3)"> Budget List  </a>
+         </li>
+         <li ng-class="{active: isSet(4)} ">
+           <a href  ng-click="setTab(4)"> Add Budget</a>
+         </li>
+      </ul>
+    </div><!--app-title-->
+
+    <!--application container-->
+<div class="app-content">
+  <div class ="row">
+    <div  class="col-md-9">
+
+      <!--****************************Task Table ***********************-->
+      <!--****************************************************************-->
+    <div id="tasklist" ng-show= "isSet(1)">
+
+     <table class="table ">
+       <thead>
+         <tr>
+           <td>Task</td>
+           <td>Due Date</td>
+           <td>
+             Action:
+           </td>
+         </tr>
+       </thead>
+       <tbody>
+        <!--Get all task information-->
+         <tr id="input">
+           <td>
+             <input class="form-control" ng-model="task.name" placeholder="Enter the Name" >
+             <br />
+             <input class="form-control" ng-model="task.note" placeholder="Enter the Note">
+           </td>
+           <td>
+             <input class="form-control" ng-model="task.date" placeholder="MM/DD/YYYY" >
+
+            <!--Add and update tasks-->
+             <div id="table-btn">
+             <button class="tb-btn" ng-click="addTask()"> Add Task </button>
+             <button  class="tb-btn" ng-click="update()">Update</button>
+           </div><!--table-btn-->
+
+           </td>
+           <!--Select Action menu-->
+           <td>
+             <select class="form-control custom-select" ng-model="task.action"
+              ng-options ="o.priority for o in actions" ng-selected="action[0]"  ng-change="selectAction()">
+                                        </select>
+           </td>
+         </tr><!--input-->
+         <!--add ng repeat directive-->
+         <tr ng-repeat="task in tasklist">
+           <td>
+             <div class="task-title">
+               {{task.name}}
+             </div>
+             <!--add ng-click delete directive-->
+             <div id="task-btns">
+
+              <!--- Menu of buttons to delete or edit task and show task note-->
+             <button class="form-btn" ng-click="edit(task._id)"><i class="fa fa-pencil"  aria-hidden="true"></i></button>
+             <button class="form-btn" ng-click="remove(task._id)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+             <button  class="form-btn toggle " ng-click="showNote =!showNote"><i class="fa fa-file-text" aria-hidden="true"></i></button>
+              <div class="descr" ng-hide="!showNote">
+                <p> {{task.note}}</p>
+              </div>
+
+            </div>
+           </td>
+           <td>
+            {{task.date | date:'mediumDate'}}
+           </td>
+           <td>
+
+            <b><i> {{task.action}} </i></b>
+
+           </td>
+         </tr>
+       </tbody>
+
+     </table><!--Task Table-->
+   </div><!---end of tasklist--->
+
+   <div class="timeline-app" ng-show= "isSet(2)">
+
+     <ul class="timeline">
+          <h1 class="time"> Task Timeline </h1>
+       <li ng-repeat="task in tasklist|limitTo:10">
+         <p class="timeline-date">
+           {{task.date | date:'mediumDate'}}
+         </p>
+         <div class="timeline-content">
+           <h3> {{task.name}}</h3>
+           <p class="note">
+            {{task.note}}
+           </p>
+         </div>
+       </li><!--task-->
+
+     </ul><!--timeline list-->
+
+   </div><!--end of timeline-->
+
+   <!--****************************Monthly Budget List***********************-->
+   <!--****************************************************************-->
+
+   <div id="budget"  ng-show= "isSet(3)">
+       <ul id="accord" class="accordian">
+       <li ng-repeat="bud in budgetList"  ng-click="showBudget =!showBudget">
+          <header >
+      <!--Show Month -->
+       <h4 class="mon-info">
+         {{bud.month | date: 'MMMM'}}
+       </h4>
+       <!--Delete Month-->
+       <div class="trash">
+          <button class="form-btn" ng-click="removeBud(bud._id)"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+       </div>
+         </header>
+         <!--Toggle Task Description -->
+         <div  class="info" ng-hide="!showBudget">
+          <section >
+            <ul class="binfo">
+              <li>
+            <b>Income:</b> ${{bud.income|number:0}}
+              </li>
+              <li>
+              <b>Account Balances: </b> ${{bud.balances|number:0}}
+              </li>
+              <li>
+                <b>Expenses: </b> ${{bud.expense|number:0}}
+              </li>
+              <li>
+              <b> {{bud.month| date:'MMMM'}}'s' total budget </b>: ${{bud.bud |number:0}}
+              </li>
+            </ul><!--b-info-->
+          </section>
+       </li><!--Budget-->
+     </ul><!--accordian-->
+   </div><!--Budget Info-->
+   </div> <!--monthly budget-->
+
+
+   <!--****************************Budget Form***********************-->
+   <!--****************************************************************-->
+
+   <div id="budget-form" ng-show="isSet(4)">
+     <div class="form-group">
+     <h2 class="mon"> Month </h2>
+     <input type="month" class="form-control" id="month"    value="2016-10" />
+     </div><!---Month-->
+
+
+<!--****************************Bank Accounts***********************-->
+<!--****************************************************************-->
+     <div id="bankGroup" class="frm-section">
+      <h2> Bank Accounts </h2>
+
+  <!--****************************Checking Account***********************-->
+     <div class="form-group">
+       <label> Checking: </label>
+      <input type="text" id="check" class="form-control" value="0"/>
+     </div> <!--checking-->
+
+
+<!--****************************Savings Accounts***********************-->
+
+     <div class="form-group">
+        <label> Savings: </label>
+       <input type="text" id="save"  class="form-control"  value="0"/>
+      </div><!--Savings-->
+
+<!--****************************Other Bank Accounts***********************-->
+     <div class="form-group">
+       <label> Other: </label>
+      <input type="text" class="form-control" id="oth" value="0"  />
+     </div> <!--other-->
+
+     <div class="form-group">
+      <label>  Total Bank Balances:</label>
+      <input type="text" class="form-control" ng-model="bkTotal" id="bkTotal" value="0" />
+     </div><!--form-group-->
+
+
+<!---Calculate Button for Balances------->
+     <div class="calc">
+       <button id="calcBal" class="tb-btn"  ng-click="calBal()"> Calculate </button>
+     </div><!--Calculate-->
+
+     </div><!--bank group-->
+
+     <div id="income" class="frm-section">
+       <h2 id="inc"> Income </h2>
+       <div class="form-group">
+         <label> Employment: </label>
+         <input type="text" id="employ" class="form-control" value="0"/>
+       </div>
+
+       <div class="form-group">
+         <label> Disablity/Retirement: </label>
+        <input type="text" id="disable"  class="form-control" value="0" />
+       </div>
+
+       <div class="form-group">
+         <label> Other: </label>
+        <input type="text" id="inOther"   class="form-control" value="0" />
+       </div>
+
+       <div class="form-group">
+         <label> Total: </label>
+        <input type="text" id="inTotal"  class="form-control" ng-model="inTotal"  />
+       </div>
+       <div class="calc">
+         <button id="calcInc" class="tb-btn"  ng-click="calIncome()"> Calculate</button>
+       </div>
+     </div><!--end of income -->
+
+     <!--****************************Monthly Budget List***********************-->
+     <!--****************************************************************-->
+
+     <div id="expenses" class="frm-section">
+       <h2 class="expTitle"> Expenses </h2>
+
+       <!--Allow user to input expenses-->
+       <div class="form-group">
+         <label> Rent: </label>
+        <input type="text" id="rent" value="0" class="form-control" />
+       </div>
+
+       <div class="form-group">
+         <label> Phone: </label>
+         <input type="text" id="phone" value="0" class="form-control" />
+       </div>
+
+       <div class="form-group">
+         <label> Gas: </label>
+         <input type="text" id="util" value="0" class="form-control" />
+       </div>
+
+       <div class="form-group">
+         <label> Car: </label>
+         <input type="text" id="car"value="0" class="form-control" />
+       </div>
+
+       <div class="form-group">
+         <label> Groceries: </label>
+        <input type="text" id="grocer" value="0" class="form-control"/>
+       </div>
+
+       <div class="form-group">
+         <label> Cable: </label>
+        <input type="text" id="cable"  value="0" class="form-control"/>
+       </div>
+
+
+       <div class="form-group">
+         <label> Necessities: </label>
+         <input type="text" id="necess" value="0"class="form-control" />
+       </div>
+
+       <div class="form-group">
+         <label> Other: </label>
+        <input type="text" id="othExp" value="0" class="form-control" />
+       </div>
+
+         <!--Show Expense Total-->
+       <div class="form-group">
+         <label> Total Expense: </label>
+      <input type="text" id="totExp" ng-model="expTotal" class="form-control" />
+       </div>
+
+       <!--Caclculate Expenses-->
+
+       <div class="calc">
+         <button id="calcExp" class="tb-btn" ng-click="calExp()"> Calculate</button>
+       </div>
+     </div> <!--expense-->
+
+      <!--Show Budget-->
+     <div id="bud-form" class="form-group">
+       <h2> Budget</h2>
+       <label> Budget Total: </label>
+       <input type="text" id="budTotal" class="form-control" ng-model="budTotal" />
+     </div><!--budget total--->
+
+
+     <div class="calc" id="bud-btn">
+      <button id="calBud" ng-click="calBud()" class="tb-btn" > Calculate </button>
+    </div><!--Calculate--->
+
+
+   </div><!--end of budget-->
+
+
+
+    <!--Priority Column-->
+    <div class="matrix-col col-md-3"  ng-show= "isSet(1) || isSet(2)">
+      <div id="all" class="prior"  id=" all" ng-click="getAll()">
+         <h1> All </h1>
+      </div>
+      <!--List each action and Sort Task by Action -->
+      <div class="prior"  id=" action-{{$index +1}}" ng-repeat="a in actions" ng-click="getAction(a.priority)">
+        <h1>{{a.priority}}  </h1>
+      </div>
+    </div><!--matrix column 3-->
+
+  </div><!--row-->
+</div><!--app content-->
+</div><!--end of container-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+  <script src="js/scripts.js"></script>
+  <script src="js/controller.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,335 @@
+
+
+body, #tasklist{
+  margin:15px 50px;
+  background: -webkit-linear-gradient(left, #EB3349,  #F45C43);
+      background: -moz-linear-gradient(left, #EB3349,  #F45C43);
+    background: linear-gradient(left, #EB3349,  #F45C43);
+    background:  #EB3349;
+  font-family: 'Roboto', sans-serif;
+
+}
+.app-title{
+  width:100%;
+  height:50px;
+      margin-bottom: 50px;
+}
+
+.title{
+  text-align: center;
+  color:#fff;
+  border-bottom: 1px solid #fff;
+  padding:10px;
+  padding-bottom:20px;
+  margin-bottom:20px;
+
+}
+.frm-section{
+  border:1px solid #fff;
+  padding: 10px 50px 50px;
+  margin-bottom:30px;
+}
+
+#expenses{
+  height:375px;
+  overflow-y:scroll;
+}
+label{
+  color:#fff;
+}
+.row{
+  margin-top:20px;
+}
+.tabs{
+  list-style: none;
+}
+.tabs > li{
+  background: darkred;
+  padding:7px;
+  width:130px;
+  text-align: center;
+  float:left;
+  margin-right:10px;
+  border-radius: 3px;
+}
+
+.tabs > li>a{
+  text-decoration: none;
+  color:#fff;
+}
+
+li.active{
+    background:#fff;
+}
+
+li.active>a{
+  color:darkred;
+  font-weight: bold;
+}
+
+.col-md-3{
+  margin-top:15px;
+}
+
+table{
+  box-shadow:3px 3px 3px rgb(178,34,34);
+  height:200px;
+  overflow-y:scroll;
+}
+tbody{
+  height:300px;
+  overflow-x:auto;
+  margin-top: 0px;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+thead{
+  padding: 20px 15px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 12px;
+  color: #fff;
+  text-transform: uppercase;
+  background-color: rgba(255,255,255,0.3);
+}
+td{
+  padding: 15px;
+  text-align: left;
+  vertical-align:middle;
+  font-weight: 300;
+  font-size: 12px;
+  color: #fff;
+  border-bottom: solid 1px rgba(255,255,255,0.1);
+}
+
+
+/*********timeline*******************/
+.timeline-app{
+  height: 500px;
+}
+
+.timeline{
+  list-style: none;
+      color:#fff;
+      width: 480px;
+    margin: 20px auto;
+
+}
+
+.time{
+  margin-left:40px;
+}
+
+.prior{
+  cursor:pointer;
+}
+
+.timeline > li{
+  margin-bottom:60px;
+}
+
+@media(min-width:640px){
+
+  .timeline> li{
+    overflow: hidden;
+    margin:0;
+    position: relative;
+  }
+
+  .timeline-date{
+    width:110px;
+    float: left;
+    margin-top:20px;
+  }
+
+  .timeline-content{
+    width:75%;
+    float:left;
+    border-left:2px #e5e5d1 solid;
+    padding-left:30px;
+  }
+
+.timeline-content:before{
+content:'';
+width:12px;
+height:12px;
+position: absolute;
+left: 105px;
+top:24px;
+border-radius:50%;
+background: firebrick;
+box-shadow: 1px 1px 1px black;
+}
+
+}
+
+/***************Budget*****************/
+#budget{
+  width:500px;
+  margin:20px auto;
+}
+#budget .form-control{
+  width:200px;
+}
+#budget label, .start {
+  color :#fff;
+}
+
+
+h2{
+  color:#fff;
+}
+.task-title{
+  float:left;
+  font-weight: bold;
+  font-size: 18px;
+  margin-right:10px;
+}
+
+#table-btn{
+  margin-top: 15px;
+}
+.tb-btn:first-child{
+
+  margin-right: 10px;
+}
+.tb-btn {
+  border:1px solid #fff;
+  outline: none;
+  background: none;
+  width:100px;
+  text-align: center;
+  padding:5px 0px;
+  border-radius:3px;
+  color:#fff;
+
+}
+.calc >.tb-btn{
+  width:100%;
+  font-size:20px;
+
+}
+
+
+
+.form-btn{
+  color:#fff;
+  border-radius:3px;
+  background: none;
+  padding:0px 4px;
+  border:2px solid #fff;
+}
+
+
+#all{
+  background: #fff;
+  color:#F45C43;
+    padding:10px 80px;
+
+}
+.prior{
+  margin-bottom:20px;
+  height: 100px;
+  border-radius:3px;
+  text-align: center;
+  padding-top: 10px;
+  box-shadow: 2px 2px 2px darkred;
+  font-weight: 600;
+  color:#fff;
+}
+
+#action-1{
+  background: red;
+
+}
+#action-2{
+  background: darkred;
+}
+#action-3{
+  border-top:1px solid darkred;
+  border-left:1px solid darkred;
+}
+
+#action-4{
+  background:#EB3349;
+  color:#fff;
+
+}
+
+
+#task-btns{
+  clear: both;
+}
+.descr{
+  border:1px solid #fff;
+  margin-top:10px;
+    border-radius: 3px;
+}
+.descr> p{
+  margin:0px;
+  padding:5px;
+}
+/************Accordian*************/
+/** ACCORDIAN **/
+ul{
+  list-style: inside;
+}
+.accordian {
+  list-style:none;
+  margin:0 0 40px;
+  padding:0;
+  box-shadow:2px #000;
+  border-top:0;
+    width:500px;
+}
+
+.mon-info{
+text-align: center;
+margin: 0px;
+}
+
+.trash{
+  float:right;
+  margin-top:-20px;
+}
+.accordian header {
+  display:block;
+  margin:0;
+  padding:1em;
+  background:darkred;
+  border-bottom:1px solid #ddd;
+  cursor:pointer;
+  color:#fff;
+  text-transform: uppercase;
+}
+
+.accordian section {
+  padding:1em;
+  background:#fff;
+  border-top:1px solid #ddd;
+    box-shadow:0px 0px 10px 0px #000;
+}
+.accordian section.active {
+  display:block;
+}
+
+
+#budget-form{
+  width:500px;
+  margin:auto;
+}
+
+#budget-form h2{
+  text-align:center;
+}
+.mon{
+  margin-top:50px;
+}
+
+@media screen and (max-width: 1000px) {
+    .mon{
+  margin-top:10px;
+}
+    .col-md-9{
+        margin-top:50px;
+    }
+}
